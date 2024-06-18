@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-// app.use(express.json()); 
+app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
@@ -25,9 +25,9 @@ app.delete('/hello/myDelete/:id', (req, res)=>{
     res.send('id = ' + req.params.id)
 })
 
-// app.post('/hello/postFormJason', (req, res)=>{
-//     res.send(req.body);
-// })
+app.post('/hello/postFormJason', (req, res)=>{
+    res.send(req.body.name + " " + req.body.phone);
+})
 
 
 app.listen(port, () => {
