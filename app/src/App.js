@@ -24,9 +24,9 @@ function App() {
   }
 
   return (
-    <div>
-      <button onClick={showAlert}>Click Me</button>
-      <button onClick={confirmDialog}>Confirm Dialog</button>
+    <div className='mt-3 ms-3'>
+      <button className='btn btn-primary me-3' onClick={showAlert}>Click Me</button>
+      <button className='btn btn-danger ' onClick={confirmDialog}>Confirm Dialog</button>
     </div>
   );
 }
