@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
-function MyInput() {
+function MyInput(props) {
   const [name, setName] = useState('');
 
   return (
     <>
-      <div>Enter your name</div>
+      <div>{props.label}</div>
       <input onChange={(e) => setName(e.target.value)} />
-      <div>{name}</div>
+      <div>
+        {props.output}: {name}
+      </div>
     </>
   );
 }

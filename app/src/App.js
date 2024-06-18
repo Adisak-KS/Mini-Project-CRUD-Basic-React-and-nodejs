@@ -13,9 +13,9 @@ function App() {
 
   return (
     <div className="">
-      <MyInput />
+      <MyInput label="Your Name" output="Name is" />
       <hr />
-      <MyInput />
+      <MyInput label="Age"  output="Your Age"/>
     </div>
   );
 }
