@@ -1,22 +1,32 @@
-import { useEffect } from "react";
-import Menu from "./Menu";
+import Swal from 'sweetalert2';
 
 function App() {
-  const padding = '10px';
-  const color = 'red';
+  const showAlert = () => {
+    Swal.fire({
+      title: 'My Dialog',
+      text: 'Message on Dialog',
+      icon: 'success',
+    })
+  }
 
-  useEffect(() => {
-    fetchData()
-  }, []);
-
-  const fetchData = () => {
-    console.log('page on load')
+  const confirmDialog = () => {
+    Swal.fire({
+      title: 'Are you sure ?',
+      text: 'You went Delete',
+      icon: 'question',
+      showConfirmButton: true,
+      showCancelButton: true,
+    }).then((res) => {
+      if (res.isConfirmed) {
+        console.log('you confirm');
+      }
+    })
   }
 
   return (
-    <div style={{ marginTop: "50px", marginLeft: "50px" }}>
-      <Menu/>
-      <input style={{ borderColor: color, padding: padding }} />
+    <div>
+      <button onClick={showAlert}>Click Me</button>
+      <button onClick={confirmDialog}>Confirm Dialog</button>
     </div>
   );
 }
