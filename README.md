@@ -74,7 +74,13 @@
 
 ### 💻 ตัวอย่างเว็บไซต์
 
-1. หน้าแรกของเว็บไซต์
-   ![index]()
+1. หน้าแสดงข้อมูล
+   ![index](https://github.com/Adisak-KS/Mini-Project-CRUD-Basic-React-and-nodejs/blob/main/previews/pre-1_show.png)
+
+2. เพิ่มข้อมูลและแก้ไขข้อมูล
+   ![index](https://github.com/Adisak-KS/Mini-Project-CRUD-Basic-React-and-nodejs/blob/main/previews/pre-2_insert.png)
+
+3. ยืนยันก่อนลบ   
+   ![index](https://github.com/Adisak-KS/Mini-Project-CRUD-Basic-React-and-nodejs/blob/main/previews/pre-3_delete.png)
 
 
