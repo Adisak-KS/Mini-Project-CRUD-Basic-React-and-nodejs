@@ -1,13 +1,16 @@
 const express = require('express');
 const controller = require('./controller');
 const app = express()
-const port = 3000
+const port = 3002
 const pool = require("./connect")
+const cors = require("cors");
 
 const db = pool.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 app.get("/db/list", async (req, res) => {
     //const db = await pool.connect();

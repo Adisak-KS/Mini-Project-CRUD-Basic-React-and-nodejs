@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import Product from './Product';
+import Book from './Book'
 
 const router = createBrowserRouter([
   {
@@ -17,8 +19,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/product",
-    element: <Product/>,
-  }
+    element: <Product />,
+  },
+  {
+    path: "/book",
+    element: <Book />,
+  },
 ]);
 
 
