@@ -8,6 +8,7 @@ function Book() {
     const [isbn, setIsbn] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
+    const [id, setId] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -37,28 +38,52 @@ function Book() {
         setIsbn('');
         setName('');
         setPrice(0);
+        setId(0);
     }
 
     const newRecordSave = () => {
+
+
+
         try {
-            axios.post(api + '/db/insert', {
-                isbn: isbn,
-                name: name,
-                price: price
-            }).then(res => {
-                Swal.fire({
-                    title: 'saved',
-                    text: 'บันทึกข้อมูลสำเร็จ',
-                    icon: 'success',
-                    timer: 1000
+            if (id == 0) {
+                axios.post(api + '/db/insert', {
+                    isbn: isbn,
+                    name: name,
+                    price: price
+                }).then(res => {
+                    Swal.fire({
+                        title: 'saved',
+                        text: 'บันทึกข้อมูลสำเร็จ',
+                        icon: 'success',
+                        timer: 1000
+                    })
+
+                    fetchData();
+
+                }).catch(err => {
+                    throw err;
                 })
+            }else{
 
-                fetchData();
+                axios.put(api + '/db/update/' + id, {
+                    isbn: isbn,
+                    name: name,
+                    price: price
+                }).then(res => {
+                    Swal.fire({
+                        title: 'saved',
+                        text: 'บันทึกข้อมูลสำเร็จ',
+                        icon: 'success',
+                        timer: 1000
+                    })
 
-            }).catch(err => {
-                throw err;
-            })
+                    fetchData();
 
+                }).catch(err => {
+                    throw err;
+                })
+            }
         } catch (e) {
             Swal.fire({
                 title: "error",
@@ -102,6 +127,13 @@ function Book() {
         }
     }
 
+    const editRecord = (item) => {
+        setIsbn(item.isbn);
+        setName(item.name);
+        setPrice(item.price);
+        setId(item.id);
+    }
+
     return (
         <>
             <div className="container-fluid">
@@ -129,7 +161,7 @@ function Book() {
                                     <td>{item.name}</td>
                                     <td>{item.price}</td>
                                     <td className='text-center'>
-                                        <button className='btn btn-primary me-3'>
+                                        <button data-bs-toggle="modal" data-bs-target="#modalForm" className='btn btn-primary me-3' onClick={e => editRecord(item)}>
                                             <i className="fa-solid fa-pencil me-1"></i>
                                             edit
                                         </button>
@@ -155,15 +187,15 @@ function Book() {
                                 <div>
                                     <div>
                                         <label>isbn</label>
-                                        <input onChange={e => setIsbn(e.target.value)} className='form-control'></input>
+                                        <input value={isbn} onChange={e => setIsbn(e.target.value)} className='form-control'></input>
                                     </div>
                                     <div className='mt-3'>
                                         <label>name</label>
-                                        <input onChange={e => setName(e.target.value)} className='form-control'></input>
+                                        <input value={name} onChange={e => setName(e.target.value)} className='form-control'></input>
                                     </div>
                                     <div className='mt-3'>
                                         <label>price</label>
-                                        <input onChange={e => setPrice(e.target.value)} className='form-control'></input>
+                                        <input value={price} onChange={e => setPrice(e.target.value)} className='form-control'></input>
                                     </div>
                                 </div>
                             </div>
