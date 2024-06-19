@@ -5,6 +5,9 @@ import Swal from 'sweetalert2';
 function Book() {
     const api = 'http://localhost:3002';
     const [books, setBooks] = useState([]);
+    const [isbn, setIsbn] = useState('');
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -30,12 +33,46 @@ function Book() {
     };
 
 
+    const newRecord = () => {
+        setIsbn('');
+        setName('');
+        setPrice(0);
+    }
+
+    const newRecordSave = () => {
+        try {
+            axios.post(api + '/db/insert', {
+                isbn: isbn,
+                name: name,
+                price: price
+            }).then(res => {
+                Swal.fire({
+                    title: 'saved',
+                    text: 'บันทึกข้อมูลสำเร็จ',
+                    icon: 'success',
+                    timer: 1000
+                })
+
+                fetchData();
+
+            }).catch(err => {
+                throw err;
+            })
+
+        } catch (e) {
+            Swal.fire({
+                title: "error",
+                text: e,
+                icon: "error",
+            });
+        }
+    }
 
     return (
         <>
             <div className="container-fluid">
-                <div>Book Data</div>
-                <button className='btn btn-primary mt-3'>
+                <div className='h3 mt-3 text-center'>Book Data</div>
+                <button data-bs-toggle="modal" data-bs-target="#modalForm" className='btn btn-primary mt-3' onClick={newRecord}>
                     <i className="fa-solid fa-plus me-1"></i>
                     New Record
                 </button>
@@ -72,6 +109,38 @@ function Book() {
                             : null}
                     </tbody>
                 </table>
+
+                <div className="modal" tabIndex="-1" id='modalForm'>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Book Data</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div>
+                                    <div>
+                                        <label>isbn</label>
+                                        <input onChange={e => setIsbn(e.target.value)} className='form-control'></input>
+                                    </div>
+                                    <div className='mt-3'>
+                                        <label>name</label>
+                                        <input onChange={e => setName(e.target.value)} className='form-control'></input>
+                                    </div>
+                                    <div className='mt-3'>
+                                        <label>price</label>
+                                        <input onChange={e => setPrice(e.target.value)} className='form-control'></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" onClick={newRecordSave} className="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </>
     )
