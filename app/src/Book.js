@@ -68,6 +68,40 @@ function Book() {
         }
     }
 
+    const removeRecord = (item) => {
+        try {
+            Swal.fire({
+                title: 'Confirm Delete',
+                text: "Are you sure for delete data ?",
+                icon: "question",
+                showCancelButton: true,
+                showConfirmButton: true,
+            }).then(res => {
+                if (res.isConfirmed) {
+                    axios.delete(api + '/db/delete/' + item.id).then(res => {
+                        Swal.fire({
+                            title: "remove row",
+                            text: "ลบรายการแล้ว",
+                            icon: "success",
+                            timer: 1000,
+                        });
+
+                        fetchData();
+                    }).catch(err => {
+                        throw err;
+                    })
+                }
+            })
+
+        } catch (e) {
+            Swal.fire({
+                title: "error",
+                text: e,
+                icon: "error",
+            });
+        }
+    }
+
     return (
         <>
             <div className="container-fluid">
@@ -99,7 +133,7 @@ function Book() {
                                             <i className="fa-solid fa-pencil me-1"></i>
                                             edit
                                         </button>
-                                        <button className='btn btn-danger'>
+                                        <button className='btn btn-danger' onClick={e => removeRecord(item)}>
                                             <i className="fa-solid fa-trash me-1"></i>
                                             delete
                                         </button>
