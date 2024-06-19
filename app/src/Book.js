@@ -42,9 +42,6 @@ function Book() {
     }
 
     const newRecordSave = () => {
-
-
-
         try {
             if (id == 0) {
                 axios.post(api + '/db/insert', {
@@ -61,6 +58,7 @@ function Book() {
 
                     fetchData();
 
+                    document.getElementById('btnClose').click();
                 }).catch(err => {
                     throw err;
                 })
@@ -79,7 +77,7 @@ function Book() {
                     })
 
                     fetchData();
-
+                    document.getElementById('btnClose').click();
                 }).catch(err => {
                     throw err;
                 })
@@ -181,7 +179,7 @@ function Book() {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Book Data</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" id='btnClose' className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <div>
