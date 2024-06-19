@@ -2,9 +2,21 @@ const express = require('express');
 const controller = require('./controller');
 const app = express()
 const port = 3000
+const pool = require("./connect")
+
+const db = pool.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/db/list", async (req, res) => {
+    //const db = await pool.connect();
+    const result = await pool.query("SELECT * FROM tb_book");
+    //db.release();
+
+    res.send(result.rows);
+});
+
 
 app.get('/', (req, res) => controller.getHello(req, res));
 app.get('/hello/:name', (req, res) => controller.getHelloName(req, res));
@@ -14,7 +26,7 @@ app.delete('/hello/myDelete/:id', (req, res) => controller.myDelete(req, res));
 app.post('/hello/postFormJason', (req, res) => controller.postFormJason(req, res));
 app.post('/login', (req, res) => controller.login(req, res));
 
-app.get('/myObject', (req, res) =>{
+app.get('/myObject', (req, res) => {
     const user = {
         name: 'Adisak',
         age: 22,
@@ -22,7 +34,7 @@ app.get('/myObject', (req, res) =>{
         salary: 9000.85
     }
 
-    res.send({result:user})
+    res.send({ result: user })
 })
 
 app.listen(port, () => {
