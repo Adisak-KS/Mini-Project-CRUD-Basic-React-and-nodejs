@@ -17,6 +17,33 @@ app.get("/db/list", async (req, res) => {
     res.send(result.rows);
 });
 
+app.post("/db/insert", async (req, res) => {
+    const result = await pool.query(
+        "INSERT INTO tb_book(isbn, name, price) VALUES($1, $2, $3)",
+        [req.body.isbn, req.body.name, req.body.price]);
+
+    res.send({ result: result });
+});
+
+app.put('/db/update/:id', async (req, res) => {
+    const result = await pool.query(
+        "UPDATE tb_book SET isbn = $1, name = $2, price = $3 WHERE id = $4", [
+        req.body.isbn,
+        req.body.name,
+        req.body.price,
+        req.params.id
+    ])
+    res.send({ result: result });
+})
+
+app.delete('/db/delete/:id', async (req, res) => {
+    const result = await pool.query(
+        "DELETE FROM tb_book WHERE id = $1", [
+        req.params.id
+    ]);
+    res.send({ result: result });
+})
+
 
 app.get('/', (req, res) => controller.getHello(req, res));
 app.get('/hello/:name', (req, res) => controller.getHelloName(req, res));
